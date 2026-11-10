@@ -1,32 +1,72 @@
+<p align="center">
+  <img src="public/img/og-cover.png" alt="NIVASA: pick your hostel roommate by habits, not roll number" width="100%">
+</p>
+
+<p align="center">
+  <a href="https://github.com/Shaurya-Adhikari/PROJECT-NIVASA/actions/workflows/test.yml"><img src="https://github.com/Shaurya-Adhikari/PROJECT-NIVASA/actions/workflows/test.yml/badge.svg" alt="Tests"></a>
+  <img src="https://img.shields.io/badge/Node.js-%E2%89%A518-339933?logo=nodedotjs&logoColor=white" alt="Node.js 18 or newer">
+  <img src="https://img.shields.io/badge/Express-4-000000?logo=express&logoColor=white" alt="Express 4">
+  <img src="https://img.shields.io/badge/MongoDB-Mongoose%208-47A248?logo=mongodb&logoColor=white" alt="MongoDB with Mongoose 8">
+  <img src="https://img.shields.io/badge/Handlebars-views-f0772b?logo=handlebarsdotjs&logoColor=white" alt="Handlebars views">
+  <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue" alt="MIT license"></a>
+</p>
+
 # NIVASA
 
-Hostel roommate matching for college students. Students answer 13 quick cards
-(sleep, study, cleanliness, room rules) and see which students in the same
-college and hostel they would get along with, then send room requests.
+Hostel roommates are usually decided by roll number. NIVASA lets students in
+the same college and hostel answer **13 quick questions** about sleep, study
+and room habits, then shows who they would actually get along with, with a
+**mutual match score**, the reasons behind it, and a way to send a room
+request.
 
-## Run it
+Everyone in a hostel pays the same fee, so there is no budget filter. What
+matters is habits, and two of them are deal breakers: **room type** (double or
+triple) and **smoking** must match, or the pair is never shown.
 
-```bash
-npm install
-npm run seed     # optional: adds 6 demo students
-npm run dev      # http://localhost:3000
+## Screenshots
+
+| Landing page | What we ask |
+| --- | --- |
+| ![Landing page](docs/images/01-hero.png) | ![The habit cards explained as rulers](docs/images/02-what-we-ask.png) |
+| **Room quiz** | **Ranked matches** |
+| ![One question at a time quiz](docs/images/03-quiz.png) | ![Match cards with scores and shared picks](docs/images/04-matches.png) |
+| **Compare answers (card flipped)** | **Sign up on mobile** |
+| ![Side by side answer comparison](docs/images/05-match-compare.png) | ![Mobile sign up form](docs/images/06-signup-mobile.png) |
+
+## Features
+
+- **Habit quiz**: 12 habit cards plus "what matters most to you", one question
+  at a time, saved as you go, works signed out too.
+- **Mutual match score**: 0 to 100%, computed by one shared engine on both the
+  server and the browser, so the number never disagrees.
+- **Must-match rules**: a room type or smoking clash hides the pair completely.
+- **Explained matches**: every card shows the habits you both picked and one
+  thing to talk about first. Flip it to compare all answers side by side.
+- **Filters**: night owls, early risers, neat, silent study, 80%+.
+- **Room requests**: send, accept, decline or cancel. Emails are shared only
+  after both students accept.
+- **College only**: sign up needs a college email (`.ac.in`, `.edu`), and you
+  only ever see students from your own college and hostel.
+- **Accessible and polished**: light and dark themes, keyboard focus styles,
+  reduced motion, Windows High Contrast support and a print stylesheet.
+
+## How it fits together
+
+```mermaid
+flowchart LR
+  B["Browser<br/>Handlebars pages + main.js"] -->|"JSON fetch"| R["Express routes<br/>routes/api.js"]
+  B -.->|"same scoring"| E[["shared/engine.js"]]
+  R --> M["Auth middleware<br/>sessions + guards"]
+  M --> C["Controllers<br/>auth · quiz · matches"]
+  C --> E
+  C --> D[("MongoDB<br/>User · Profile · Match")]
 ```
 
-No MongoDB install is needed for development: without `MONGO_URI` the server
-starts an embedded MongoDB that keeps its data in `.data/db`. To use Atlas or
-a local `mongod`, copy `.env.example` to `.env` and set `MONGO_URI`.
-
-To see the demo students as matches, sign up with any `@nivasa-demo.ac.in`
-email and hostel `Girls Hostel A`.
-
-```bash
-npm test         # compatibility engine tests
-```
+The engine is a single file loaded with `require` on the server and with a
+`<script>` tag in the browser, so the quiz preview and the real match feed
+always score the same way.
 
 ## How matching works
-
-The engine lives in `shared/engine.js` and runs on both the server and the
-browser, so scores always agree.
 
 1. **Must match cards** (room type, smoking) never add points. If they
    conflict, the pair is hidden from both feeds.
@@ -66,6 +106,38 @@ The card then lists their best overlaps ("Same wake up time", "Same
 cleanliness") and one gap to talk about first ("Talk about: food in the
 room").
 
+## Run it locally
+
+```bash
+npm install
+npm run seed     # optional: adds 6 demo students
+npm run dev      # http://localhost:3000
+```
+
+No MongoDB install is needed for development: without `MONGO_URI` the server
+starts an embedded MongoDB that keeps its data in `.data/db`. To use Atlas or
+a local `mongod`, copy `.env.example` to `.env` and set `MONGO_URI`.
+
+To see the demo students as matches, sign up with any `@nivasa-demo.ac.in`
+email and hostel `Girls Hostel A`.
+
+```bash
+npm test         # compatibility engine tests (Node 22+)
+```
+
+Tests also run automatically on every push and pull request through
+GitHub Actions.
+
+## Security
+
+- Passwords are hashed with bcrypt (cost 12) and never returned by the API.
+- The session is regenerated on sign in to prevent session fixation, and
+  stored in MongoDB with an http-only cookie.
+- Helmet sets a strict Content Security Policy and other security headers.
+- Login and signup are rate limited.
+- Quiz answers are sanitised by the engine: unknown keys and out of range
+  values are dropped before saving.
+
 ## API
 
 | Method | Path | What it does |
@@ -81,9 +153,7 @@ room").
 | POST | `/api/requests` | Send a request `{ to: userId }` |
 | PATCH | `/api/requests/:id` | `{ status: "accepted" \| "declined" \| "cancelled" }` |
 
-Emails are only shared after both students accept.
-
-## Structure
+## Project structure
 
 ```
 server.js              Express app: views, security headers, sessions, routes
@@ -94,7 +164,24 @@ middleware/            auth guards, error handling
 routes/                api.js (JSON), pages.js (Handlebars pages)
 shared/engine.js       Questions and compatibility engine (server + browser)
 views/                 Handlebars layout, partials, home, login, signup, 404
-public/                CSS and browser JS
+public/                CSS, browser JS, favicon and share image
 scripts/seed.js        Demo students
 tests/                 Engine tests (node --test)
+docs/                  Synopsis, progress report, timeline, screenshots
 ```
+
+## Team
+
+| Member | Area | Main files |
+| --- | --- | --- |
+| [Shaurya Adhikari](https://github.com/Shaurya-Adhikari) | Project lead · matching engine · match cards | `shared/engine.js`, `tests/`, `controllers/matchController.js`, `public/js/main.js` |
+| [vinayakvaish05](https://github.com/vinayakvaish05) | Design system · themes · accessibility | `public/css/styles.css`, `views/layouts/`, `views/partials/` |
+| [Mridul-Sahai](https://github.com/Mridul-Sahai) | Quiz and profiles · page routes | `models/Profile.js`, `controllers/quizController.js`, `routes/` |
+| [Krishna-bit-shah](https://github.com/Krishna-bit-shah) | Accounts · login · security | `models/User.js`, `controllers/authController.js`, `middleware/` |
+
+Built for CSE 2022 Web Programming, 2026–27. See [CONTRIBUTING.md](CONTRIBUTING.md)
+for how we branch, commit and review.
+
+## License
+
+[MIT](LICENSE)
