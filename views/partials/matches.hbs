@@ -1,0 +1,60 @@
+    <!-- ============ Matches: flip cards, score on the front, answers on the back ============ -->
+    <section id="matches" class="section matches-section reveal" aria-labelledby="matches-title">
+      <div class="container">
+        <header class="sec-head">
+          <h2 id="matches-title" class="heading-2">Who you'd<br> share a room with.</h2>
+          <div class="sec-intro">
+            {{#if user}}
+            <p class="body-3 muted">Everyone in {{user.hostel}} who has answered, best match first. Tap <strong>Compare answers</strong> on any card to flip it and see what each of you picked.</p>
+            {{else}}
+            <p class="body-3 muted">These are sample students, scored live against your answers. Tap <strong>Compare answers</strong> to flip a card. <a class="text-link" href="/signup">Create an account</a> to see the real students in your hostel.</p>
+            {{/if}}
+          </div>
+        </header>
+
+        {{#if user}}
+        <!-- Room requests: filled by main.js from GET /api/requests -->
+        <div class="requests" data-requests hidden>
+          <p class="requests-label caption-3">Room requests</p>
+          <ul class="request-list" role="list"></ul>
+        </div>
+        {{/if}}
+
+        <div class="feed-bar">
+          <div class="filter-tabs" role="group" aria-label="Filter matches">
+            <button class="tab button-sm" type="button" aria-pressed="true" data-filter="all">All</button>
+            <button class="tab button-sm" type="button" aria-pressed="false" data-filter="night">Night owls</button>
+            <button class="tab button-sm" type="button" aria-pressed="false" data-filter="early">Early risers</button>
+            <button class="tab button-sm" type="button" aria-pressed="false" data-filter="tidy">Neat</button>
+            <button class="tab button-sm" type="button" aria-pressed="false" data-filter="silent">Silent study</button>
+            <button class="tab button-sm" type="button" aria-pressed="false" data-filter="top">80%+</button>
+          </div>
+          <p class="results-count caption-2 muted" role="status" aria-live="polite"></p>
+        </div>
+
+        <!-- Shown before the first answer -->
+        <div class="empty-state" data-state="start">
+          <p class="empty-mark" aria-hidden="true">?</p>
+          <h3 class="title-1">Put a few dots down first</h3>
+          <p class="body-6 muted">Answer some questions in the quiz and this list ranks itself.</p>
+          <a class="btn-text button-sm" href="#quiz">Go to the quiz <span class="ph ph-arrow-up" aria-hidden="true"></span></a>
+        </div>
+
+        <ol class="match-list" role="list" hidden></ol>
+
+        <!-- Signed in, but nobody else in the hostel has answered yet -->
+        <div class="empty-state" data-state="none" hidden>
+          <p class="empty-mark" aria-hidden="true">0</p>
+          <h3 class="title-1">No one else from your hostel is here yet</h3>
+          <p class="body-6 muted">Share NIVASA in your hostel group. Matches show up here as soon as others answer.</p>
+        </div>
+
+        <!-- Shown when filters remove every row -->
+        <div class="empty-state" data-state="filtered" hidden>
+          <p class="empty-mark" aria-hidden="true">0</p>
+          <h3 class="title-1">No students match this filter</h3>
+          <p class="body-6 muted">Some students are hidden because a must match answer is different, like room type or smoking.</p>
+          <button class="btn-text button-sm" type="button" data-filter="all">Show everyone</button>
+        </div>
+      </div>
+    </section>
