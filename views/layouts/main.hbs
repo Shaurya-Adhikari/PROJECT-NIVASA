@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en-IN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{#if title}}{{title}} | NIVASA{{else}}NIVASA | Pick your hostel roommate by habits, not roll number{{/if}}</title>
+  <meta name="description" content="NIVASA matches students in your college hostel by sleep time, study style, cleanliness and room rules. Answer 13 quick questions and see who you would actually get along with.">
+  <meta name="color-scheme" content="light dark">
+  <meta name="theme-color" content="#faf7f2" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#181818" media="(prefers-color-scheme: dark)">
+
+  <!-- Social sharing -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="NIVASA | Pick your hostel roommate by habits">
+  <meta property="og:description" content="Thirteen quick questions. A roommate who sleeps, studies and cleans like you do.">
+  <meta property="og:image" content="/img/og-cover.png">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <link rel="icon" href="/img/favicon.svg" type="image/svg+xml">
+
+  <!-- Apply saved theme and mark JS before first paint (prevents flashes) -->
+  <script src="/js/theme-init.js"></script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap">
+  <script src="https://unpkg.com/@phosphor-icons/web@2.1.1" defer></script>
+
+  <link rel="stylesheet" href="/css/styles.css">
+  <script src="/js/common.js" defer></script>
+  {{#if (eq page "home")}}
+  <script src="/shared/engine.js" defer></script>
+  <script src="/js/main.js" defer></script>
+  {{/if}}
+  {{#if (eq page "auth")}}
+  <script src="/js/auth.js" defer></script>
+  {{/if}}
+</head>
+<body{{#if user}} data-signed-in="true"{{/if}}>
+  <a class="skip-link" href="#main">Skip to main content</a>
+
+  {{> header}}
+
+  {{{body}}}
+
+  {{> footer}}
+</body>
+</html>

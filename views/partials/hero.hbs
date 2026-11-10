@@ -1,0 +1,62 @@
+    <!-- ============ Hero: headline and two student ID cards ============ -->
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="container hero-grid">
+        <div class="hero-copy">
+          <p class="kicker caption-3">For hostel room allotment</p>
+          <h1 id="hero-title" class="heading-1 hero-title">Pick your roommate<br> by habits,<br> not roll number</h1>
+          <p class="hero-sub body-3">
+            Answer 13 quick questions about sleep, study and room rules.
+            NIVASA shows you which students in your hostel you would actually get along with,
+            before the allotment list goes up.
+          </p>
+          <div class="hero-actions">
+            <a class="btn btn-primary button-md" href="#quiz">
+              Start the room quiz
+              <span class="ph ph-arrow-right" aria-hidden="true"></span>
+            </a>
+          </div>
+          <p class="hero-proof caption-1">
+            <span><span class="ph ph-cards" aria-hidden="true"></span>13 questions</span>
+            <span><span class="ph ph-timer" aria-hidden="true"></span>About 3 minutes</span>
+            <span><span class="ph ph-student" aria-hidden="true"></span>Only your college</span>
+          </p>
+        </div>
+
+        <!-- Two student ID cards with their match score between them -->
+        <figure class="pair" aria-labelledby="pair-caption">
+          <div class="pair-cards">
+            <div class="id-card id-card--a">
+              <p class="id-strip caption-3"><span>NIVASA · Hostel ID</span><span class="ph ph-identification-badge" aria-hidden="true"></span></p>
+              <div class="id-body">
+                <span class="id-avatar id-avatar--a" aria-hidden="true">RS</span>
+                <div>
+                  <p class="title-2">{{slip.a.name}} Sharma</p>
+                  <p class="caption-2 muted">2nd year · CSE</p>
+                </div>
+              </div>
+              <p class="id-habits caption-2 muted">Asleep by 12 · Silent study · Neat</p>
+            </div>
+
+            <div class="id-card id-card--b">
+              <p class="id-strip caption-3"><span>NIVASA · Hostel ID</span><span class="ph ph-identification-badge" aria-hidden="true"></span></p>
+              <div class="id-body">
+                <span class="id-avatar id-avatar--b" aria-hidden="true">SN</span>
+                <div>
+                  <p class="title-2">{{slip.b.name}} Nair</p>
+                  <p class="caption-2 muted">2nd year · ECE</p>
+                </div>
+              </div>
+              <p class="id-habits caption-2 muted">Asleep by 12 · Silent study · Mostly tidy</p>
+            </div>
+
+            <p class="pair-score" aria-hidden="true"><span>{{slip.score}}%</span><span class="caption-4">match</span></p>
+          </div>
+
+          <ul class="pair-notes caption-1" role="list" aria-hidden="true">
+            <li class="pair-note--good"><span class="ph ph-check-circle"></span>Same bedtime, both need lights off</li>
+            <li class="pair-note--talk"><span class="ph ph-chat-circle-dots"></span>Talk about: friends over on weekdays</li>
+          </ul>
+          <figcaption id="pair-caption" class="sr-only">Sample pair: {{slip.a.name}} and {{slip.b.name}} are a {{slip.score}} percent match. They share a bedtime and both need lights off, and should talk about friends visiting on weekdays.</figcaption>
+        </figure>
+      </div>
+    </section>
