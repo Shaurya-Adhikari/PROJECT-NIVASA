@@ -2,6 +2,7 @@
   "name": "nivasa",
   "version": "0.2.0",
   "private": true,
+  "license": "MIT",
   "description": "Hostel roommate matching for college students, scored on sleep, study and room habits.",
   "main": "server.js",
   "scripts": {
