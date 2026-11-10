@@ -1,0 +1,13 @@
+<main id="main" tabindex="-1" class="page-main">
+  <article class="container page-grid">
+    <header class="page-head">
+      <a class="back-link caption-1" href="/"><span class="ph ph-arrow-left" aria-hidden="true"></span>Home</a>
+      <h1 class="heading-2">{{title}}</h1>
+    </header>
+    <ol class="page-body" role="list">
+      {{#each body}}
+      <li><span class="caption-3 muted page-num">{{inc @index}}</span><p class="body-3">{{this}}</p></li>
+      {{/each}}
+    </ol>
+  </article>
+</main>

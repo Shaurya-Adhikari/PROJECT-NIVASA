@@ -1,0 +1,53 @@
+<header class="site-header">
+  <div class="nav-bar">
+    <a class="brand" href="/" aria-label="NIVASA home">
+      <span class="brand-mark" aria-hidden="true">N</span>
+      <span class="brand-name">NIVASA</span>
+    </a>
+
+    <nav class="nav-desktop" aria-label="Primary">
+      <ul class="nav-list" role="list">
+        <li><a class="nav-link title-4" href="/#cards">What we ask</a></li>
+        <li><a class="nav-link title-4" href="/#quiz">Room quiz</a></li>
+        <li><a class="nav-link title-4" href="/#matches">Matches</a></li>
+        <li><a class="nav-link title-4" href="/#faq">FAQ</a></li>
+      </ul>
+    </nav>
+
+    <div class="nav-actions">
+      <button class="icon-btn theme-toggle" type="button" aria-pressed="false" aria-label="Switch to dark theme">
+        <span class="ph ph-moon icon-moon" aria-hidden="true"></span>
+        <span class="ph ph-sun icon-sun" aria-hidden="true"></span>
+      </button>
+      {{#if user}}
+      <span class="nav-user caption-1" title="{{user.email}}">{{user.name}}</span>
+      <button class="btn btn-secondary button-sm nav-cta" type="button" data-logout>Log out</button>
+      {{else}}
+      <a class="nav-link title-4 nav-login" href="/login"{{#if (eq page "auth")}} aria-current="page"{{/if}}>Log in</a>
+      <a class="btn btn-primary button-sm nav-cta" href="/signup">Sign up</a>
+      {{/if}}
+      <button class="icon-btn menu-toggle" type="button" aria-expanded="false" aria-controls="mobile-menu" aria-label="Open menu">
+        <span class="menu-line" aria-hidden="true"></span>
+        <span class="menu-line" aria-hidden="true"></span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Full height mobile menu -->
+  <div id="mobile-menu" class="mobile-menu" hidden>
+    <nav aria-label="Mobile">
+      <ul class="mobile-list" role="list">
+        <li><a class="heading-4" href="/#cards">What we ask</a></li>
+        <li><a class="heading-4" href="/#quiz">Room quiz</a></li>
+        <li><a class="heading-4" href="/#matches">Matches</a></li>
+        <li><a class="heading-4" href="/#faq">FAQ</a></li>
+        {{#if user}}
+        <li><button class="btn btn-secondary button-md" type="button" data-logout>Log out {{user.name}}</button></li>
+        {{else}}
+        <li><a class="heading-4" href="/login">Log in</a></li>
+        <li><a class="btn btn-primary button-md" href="/signup">Sign up</a></li>
+        {{/if}}
+      </ul>
+    </nav>
+  </div>
+</header>

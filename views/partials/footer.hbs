@@ -1,0 +1,20 @@
+<footer class="site-footer">
+  <div class="container footer-inner">
+    <div class="footer-brand">
+      <a class="brand" href="/" aria-label="NIVASA home">
+        <span class="brand-mark" aria-hidden="true">N</span>
+        <span class="brand-name">NIVASA</span>
+      </a>
+      <p class="caption-2 muted">Hostel roommate matching, built by students.</p>
+    </div>
+    <nav aria-label="Footer">
+      <ul class="footer-links caption-1" role="list">
+        <li><a href="/about"{{#if (eq page "about")}} aria-current="page"{{/if}}>About</a></li>
+        <li><a href="/privacy"{{#if (eq page "privacy")}} aria-current="page"{{/if}}>Privacy policy</a></li>
+        <li><a href="/terms"{{#if (eq page "terms")}} aria-current="page"{{/if}}>Terms of use</a></li>
+        <li><a href="mailto:hello@nivasa.in">Contact</a></li>
+      </ul>
+    </nav>
+    <p class="caption-5 muted">© {{year}} NIVASA</p>
+  </div>
+</footer>
