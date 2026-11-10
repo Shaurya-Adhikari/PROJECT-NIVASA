@@ -1500,3 +1500,89 @@ select.text-input { appearance: auto; cursor: pointer; }
 .sk-short { width: 60%; }
 .sk-ring { width: 80px; height: 80px; border-radius: var(--r-full); }
 @keyframes sk-pulse { 50% { opacity: 0.5; } }
+
+/* ---------- Print ---------- */
+/* Printing the matches page should give a clean list on white paper:
+   no navigation or buttons, light colours, and both sides of every card. */
+@media print {
+  /* Same selectors as the dark theme rules, so paper is always light */
+  :root, :root:not([data-theme="light"]), :root[data-theme="dark"] {
+    --bg: #ffffff;
+    --bg-alt: #ffffff;
+    --surface: #ffffff;
+    --surface-2: #eeeeee;
+    --text: #000000;
+    --text-muted: #444444;
+    --border: #bbbbbb;
+    --primary: #c2410c;
+    --on-primary: #ffffff;
+    --primary-soft: #fde8dc;
+    --good: #1d6b4f;
+    --good-soft: #dff1e8;
+    --talk: #8a5a00;
+    --talk-soft: #fbefd5;
+    --hero-from: #000000;
+    --hero-to: #000000;
+    --tagline-muted: #888888;
+    --shadow: none;
+    color-scheme: light;
+  }
+  html, body { background: #ffffff; color: #000000; }
+
+  .site-header, .site-footer, .mobile-menu, .skip-link, .theme-toggle,
+  .hero-actions, .filter-tabs, .feed-bar, .mcard-actions, .request-actions,
+  .done-actions, .q-skip, .btn, .btn-text, .cta-ruler, .lost-ruler { display: none !important; }
+
+  .hero { padding-top: 0; }
+  .section { padding-block: 16pt; }
+
+  /* Scroll reveals never fire on paper, so show everything */
+  .js .reveal, .mcard { opacity: 1 !important; transform: none !important; }
+
+  /* Lay each match card flat: front on top, answers comparison underneath */
+  .mcard { perspective: none; break-inside: avoid; margin-bottom: 12pt; }
+  .mcard-inner, .mcard.is-flipped .mcard-inner { transform: none !important; }
+  .mcard-face, .mcard-back,
+  .mcard:not(.is-flipped) .mcard-back,
+  .mcard.is-flipped .mcard-front {
+    position: static !important;
+    grid-area: auto !important; /* on screen both faces share one cell */
+    transform: none !important;
+    overflow: visible !important;
+    visibility: visible !important;
+    backface-visibility: visible !important;
+    box-shadow: none;
+    border: 1px solid #bbbbbb;
+  }
+  .mcard-back { border-top: 0; }
+
+  .ruler-row, .faq-item, .request-item { break-inside: avoid; }
+  a { color: inherit; text-decoration: underline; }
+}
+
+/* ---------- Windows High Contrast (forced colours) ---------- */
+/* Forced colours mode wipes background colours and recolours SVG strokes,
+   which erased the ruler dots, the chosen quiz answer and the score ring.
+   Repaint those with system colours so they stay visible. */
+@media (forced-colors: active) {
+  .dot--a, .lost-dot,
+  .stop input:checked + .stop-dot,
+  .cta-ruler:hover .cta-dot, .cta-ruler:focus-visible .cta-dot {
+    forced-color-adjust: none;
+    background: Highlight;
+    border-color: Highlight;
+  }
+  .stop input:checked + .stop-dot { box-shadow: none; outline: 2px solid CanvasText; outline-offset: 2px; }
+
+  .ruler-track::before, .tick, .scale::before, .gap {
+    forced-color-adjust: none;
+    background: CanvasText;
+  }
+
+  .ring .ring-bg { stroke: GrayText; }
+  .ring .ring-fg { stroke: Highlight; }
+
+  .tab[aria-pressed="true"] { forced-color-adjust: none; background: Highlight; color: HighlightText; }
+  .btn, .tab, .pick-body, .brand-mark { border: 1px solid ButtonText; }
+  .brand-mark { forced-color-adjust: none; background: CanvasText; color: Canvas; }
+}
