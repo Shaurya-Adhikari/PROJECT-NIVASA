@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <!-- Same mark as the header: a tilted rounded square with an N -->
+  <g transform="rotate(-6 16 16)">
+    <rect x="3" y="3" width="26" height="26" rx="7" fill="#c2410c"/>
+    <path d="M11 22V10l10 12V10" fill="none" stroke="#ffffff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+</svg>
