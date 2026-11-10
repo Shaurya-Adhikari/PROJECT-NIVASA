@@ -37,6 +37,35 @@ browser, so scores always agree.
 4. **Mutual score** is the geometric mean of both directions,
    `√(A→B × B→A)`, so a match is only high if it works for both students.
 
+### Worked example
+
+Riya and Kavya both want a double room. Riya doesn't smoke and Kavya doesn't
+mind, so neither must-match card blocks them. (If Kavya smoked, the pair would
+be hidden, whatever their other answers.)
+
+| Habit | Weight | Riya | Kavya | Similarity |
+| --- | --- | --- | --- | --- |
+| Bedtime | 3 | 11pm to 12:30am | 12:30am to 2am | 1 − 1/3 = 0.67 |
+| Wake up | 1.5 | 7 to 8:30am | 7 to 8:30am | 1.00 |
+| Lights at night | 1.5 | Fully off | Desk lamp fine | 1 − 1/2 = 0.50 |
+| Cleanliness | 2.5 | Neat | Neat | 1.00 |
+| Study style | 2.5 | Total silence | Soft music | 0.50 |
+| Friends in the room | 2 | Sometimes | Sometimes | 1.00 |
+| Sharing stuff | 1.5 | Small things | Small things | 1.00 |
+| Fan and window | 1 | Medium | Medium | 1.00 |
+| Food in the room | 1.5 | Eggs fine | Anything goes | 0.50 |
+| Roommate vibe | 1 | Friendly | Friendly | 1.00 |
+
+- **Riya's side.** Her top pick is bedtime, so it counts 3 × 2 = 6. Weighted
+  total 16.25 out of 21, so **Riya → Kavya = 0.774**.
+- **Kavya's side.** Her top pick is study style, so it counts 2.5 × 2 = 5.
+  Weighted total 15.5 out of 20.5, so **Kavya → Riya = 0.756**.
+- **Mutual score** = √(0.774 × 0.756) = 0.765, shown as **76%**.
+
+The card then lists their best overlaps ("Same wake up time", "Same
+cleanliness") and one gap to talk about first ("Talk about: food in the
+room").
+
 ## API
 
 | Method | Path | What it does |
