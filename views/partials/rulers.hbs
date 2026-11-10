@@ -1,0 +1,77 @@
+    <!-- ============ What we ask: one ruler per question ============ -->
+    <section id="cards" class="section rulers-section reveal" aria-labelledby="cards-title">
+      <div class="container">
+        <header class="rulers-head">
+          <h2 id="cards-title" class="heading-2">Twelve questions.<br> One ruler each.</h2>
+          <div class="rulers-intro">
+            <p class="body-3 muted">
+              Here are {{rulers.a.name}} and {{rulers.b.name}} on every question.
+              The closer their dots, the better that habit matches.
+              Everyone pays the same hostel fee, so money is not on the list.
+            </p>
+            <ul class="legend caption-1" role="list">
+              <li><span class="dot dot--a" aria-hidden="true"></span>{{rulers.a.name}} · {{rulers.a.meta}}</li>
+              <li><span class="dot dot--b" aria-hidden="true"></span>{{rulers.b.name}} · {{rulers.b.meta}}</li>
+            </ul>
+          </div>
+        </header>
+
+        <ol class="ruler-list" role="list">
+          {{#each rulers.rows}}
+          <li>
+            <a class="ruler-row{{#if must}} ruler-row--must{{/if}}" href="#quiz" data-goto="{{id}}" style="--i: {{@index}}">
+              <span class="ruler-num caption-3" aria-hidden="true">{{num}}</span>
+
+              <span class="ruler-name">
+                <span class="title-1">{{title}}</span>
+                <span class="caption-2 muted">{{why}}</span>
+              </span>
+
+              {{#if must}}
+              <span class="must-pick" aria-hidden="true">
+                {{#each options}}
+                <span class="must-opt{{#if a}} is-a{{/if}}{{#if b}} is-b{{/if}} caption-1">
+                  {{#if a}}<span class="dot dot--a"></span>{{/if}}{{#if b}}<span class="dot dot--b"></span>{{/if}}
+                  {{label}}
+                </span>
+                {{/each}}
+              </span>
+              <span class="ruler-result">
+                <span class="stamp caption-3">{{#if ok}}Must match ✓{{else}}Blocked{{/if}}</span>
+              </span>
+              {{else}}
+              <span class="ruler" aria-hidden="true">
+                <span class="ruler-track">
+                  {{#each ticks}}<span class="tick" style="left: {{pos}}%"></span>{{/each}}
+                  {{#unless same}}<span class="gap gap--{{tone}}" style="left: {{gapLeft}}%; width: {{gapWidth}}%"></span>{{/unless}}
+                  <span class="dot dot--b dot--on" style="left: {{bPos}}%" title="{{@root.rulers.b.name}}: {{bLabel}}"></span>
+                  <span class="dot dot--a dot--on{{#if same}} dot--stacked{{/if}}" style="left: {{aPos}}%" title="{{@root.rulers.a.name}}: {{aLabel}}"></span>
+                </span>
+                <span class="ruler-ends caption-5 muted"><span>{{start}}</span><span>{{end}}</span></span>
+              </span>
+              <span class="ruler-result">
+                <span class="sim sim--{{tone}} title-3">{{sim}}%</span>
+                <span class="caption-5 muted">counts ×{{weight}}</span>
+              </span>
+              {{/if}}
+
+              <span class="sr-only">
+                {{title}}: {{@root.rulers.a.name}} {{aLabel}}, {{@root.rulers.b.name}} {{bLabel}}.
+                {{#if must}}{{#if ok}}Allowed to match.{{else}}Blocked.{{/if}}{{else}}{{sim}} percent similar.{{/if}}
+                Open this question in the quiz.
+              </span>
+              <span class="ph ph-arrow-up-right ruler-go" aria-hidden="true"></span>
+            </a>
+          </li>
+          {{/each}}
+        </ol>
+
+        <div class="ruler-total">
+          <p class="body-3">
+            Weighted by what each of them cares about, then combined both ways so it has to work for both:
+          </p>
+          <p class="ruler-score"><span class="heading-3">{{rulers.score}}%</span><span class="caption-1 muted">{{rulers.a.name}} and {{rulers.b.name}}</span></p>
+        </div>
+      </div>
+    </section>
+

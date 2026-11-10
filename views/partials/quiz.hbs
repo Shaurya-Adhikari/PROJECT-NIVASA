@@ -1,0 +1,37 @@
+    <!-- ============ Room quiz: put your own dot on each ruler ============ -->
+    <section id="quiz" class="section quiz-section reveal" aria-labelledby="quiz-title">
+      <div class="container">
+        <header class="sec-head">
+          <h2 id="quiz-title" class="heading-2">Now put<br> your own dot down.</h2>
+          <div class="sec-intro">
+            <p class="body-3 muted">
+              Same rulers, your answers. Tap a stop and the next question slides in.
+              The last one asks what matters most to you, and that habit counts double in your scores.
+            </p>
+            <p class="caption-1 muted"><span class="dot dot--a" aria-hidden="true"></span> Your matches further down update as you go.</p>
+          </div>
+        </header>
+
+        <div class="quiz-board">
+          <div class="quiz-top">
+            <p class="quiz-count caption-3" aria-live="polite">01 / 13</p>
+            <!-- One tick per question, filled by main.js -->
+            <ol class="quiz-ticks" role="list" aria-label="Questions"></ol>
+          </div>
+
+          <!-- Question panels are rendered here from the shared QUESTIONS list -->
+          <form id="quiz-form" class="quiz-stage" novalidate>
+            <noscript><p class="body-3">Turn on JavaScript to take the room quiz.</p></noscript>
+          </form>
+
+          <div class="quiz-nav">
+            <button class="btn-text button-sm" type="button" data-quiz="back">
+              <span class="ph ph-arrow-left" aria-hidden="true"></span>Back
+            </button>
+            <button class="btn btn-primary button-sm" type="button" data-quiz="next">
+              Next<span class="ph ph-arrow-right" aria-hidden="true"></span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
