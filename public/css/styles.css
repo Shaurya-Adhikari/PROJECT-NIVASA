@@ -1559,3 +1559,30 @@ select.text-input { appearance: auto; cursor: pointer; }
   .ruler-row, .faq-item, .request-item { break-inside: avoid; }
   a { color: inherit; text-decoration: underline; }
 }
+
+/* ---------- Windows High Contrast (forced colours) ---------- */
+/* Forced colours mode wipes background colours and recolours SVG strokes,
+   which erased the ruler dots, the chosen quiz answer and the score ring.
+   Repaint those with system colours so they stay visible. */
+@media (forced-colors: active) {
+  .dot--a, .lost-dot,
+  .stop input:checked + .stop-dot,
+  .cta-ruler:hover .cta-dot, .cta-ruler:focus-visible .cta-dot {
+    forced-color-adjust: none;
+    background: Highlight;
+    border-color: Highlight;
+  }
+  .stop input:checked + .stop-dot { box-shadow: none; outline: 2px solid CanvasText; outline-offset: 2px; }
+
+  .ruler-track::before, .tick, .scale::before, .gap {
+    forced-color-adjust: none;
+    background: CanvasText;
+  }
+
+  .ring .ring-bg { stroke: GrayText; }
+  .ring .ring-fg { stroke: Highlight; }
+
+  .tab[aria-pressed="true"] { forced-color-adjust: none; background: Highlight; color: HighlightText; }
+  .btn, .tab, .pick-body, .brand-mark { border: 1px solid ButtonText; }
+  .brand-mark { forced-color-adjust: none; background: CanvasText; color: Canvas; }
+}
