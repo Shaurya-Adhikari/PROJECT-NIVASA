@@ -23,6 +23,13 @@ Everyone in a hostel pays the same fee, so there is no budget filter. What
 matters is habits, and two of them are deal breakers: **room type** (double or
 triple) and **smoking** must match, or the pair is never shown.
 
+## Watch the demo
+
+A 70 second tour: the quiz, how two answers are compared, ranked matches and
+room requests (sound on).
+
+https://github.com/user-attachments/assets/82246f72-4ecf-4acb-9f50-1500b7f4ee00
+
 ## Screenshots
 
 | Landing page | What we ask |
