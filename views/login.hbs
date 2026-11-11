@@ -1,0 +1,33 @@
+<main id="main" tabindex="-1" class="auth-main">
+  <div class="container auth-grid">
+    <header class="auth-side">
+      <p class="kicker caption-3">Log in</p>
+      <h1 id="auth-title" class="heading-2">Back to<br> your ranking.</h1>
+      <p class="body-3 muted">Your answers and room requests are saved to your account. Scores update whenever someone new in your hostel joins.</p>
+    </header>
+
+    <section class="auth-form-wrap" aria-labelledby="auth-title">
+      <form class="auth-form" data-auth="login" data-next="{{next}}" novalidate>
+        <div class="field">
+          <label class="title-4" for="login-email">College email</label>
+          <input id="login-email" class="text-input body-3" name="email" type="email" autocomplete="email" required
+                 placeholder="riya.sharma@college.ac.in" aria-describedby="login-email-err">
+          <p id="login-email-err" class="field-error caption-2" data-error-for="email" aria-live="polite"></p>
+        </div>
+
+        <div class="field">
+          <label class="title-4" for="login-password">Password</label>
+          <input id="login-password" class="text-input body-3" name="password" type="password" autocomplete="current-password" required
+                 aria-describedby="login-password-err">
+          <p id="login-password-err" class="field-error caption-2" data-error-for="password" aria-live="polite"></p>
+        </div>
+
+        <p class="form-error caption-2" role="alert"></p>
+        <div class="auth-actions">
+          <button class="btn btn-primary button-md" type="submit">Log in <span class="ph ph-arrow-right" aria-hidden="true"></span></button>
+          <p class="caption-2 muted">New here? <a class="text-link" href="/signup">Create an account</a></p>
+        </div>
+      </form>
+    </section>
+  </div>
+</main>

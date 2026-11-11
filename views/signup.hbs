@@ -1,0 +1,79 @@
+<main id="main" tabindex="-1" class="auth-main">
+  <div class="container auth-grid">
+    <header class="auth-side">
+      <p class="kicker caption-3">Students only</p>
+      <h1 id="auth-title" class="heading-2">Get your dot<br> on the board.</h1>
+      <p class="body-3 muted">Sign up with your college email. You only ever see, and are seen by, students from your own college and hostel.</p>
+      <ol class="auth-steps" role="list">
+        <li><span class="caption-3 muted">01</span><span class="body-5">Create your account</span></li>
+        <li><span class="caption-3 muted">02</span><span class="body-5">Answer 13 questions</span></li>
+        <li><span class="caption-3 muted">03</span><span class="body-5">Send a room request to your top match</span></li>
+      </ol>
+      <p class="answers-note caption-1" data-answers-note hidden>
+        <span class="dot dot--a" aria-hidden="true"></span>
+        <span>The answers you already gave on this device come with you.</span>
+      </p>
+    </header>
+
+    <section class="auth-form-wrap" aria-labelledby="auth-title">
+      <form class="auth-form" data-auth="signup" novalidate>
+        <div class="field">
+          <label class="title-4" for="su-name">Full name</label>
+          <input id="su-name" class="text-input body-3" name="name" type="text" autocomplete="name" required maxlength="60"
+                 placeholder="Riya Sharma" aria-describedby="su-name-err">
+          <p id="su-name-err" class="field-error caption-2" data-error-for="name" aria-live="polite"></p>
+        </div>
+
+        <div class="field">
+          <label class="title-4" for="su-email">College email</label>
+          <input id="su-email" class="text-input body-3" name="email" type="email" autocomplete="email" required
+                 placeholder="riya.sharma@college.ac.in" aria-describedby="su-email-err">
+          <p id="su-email-err" class="field-error caption-2" data-error-for="email" aria-live="polite"></p>
+        </div>
+
+        <div class="field-row">
+          <div class="field">
+            <label class="title-4" for="su-year">Year</label>
+            <select id="su-year" class="text-input body-3" name="year" required aria-describedby="su-year-err">
+              <option value="">Choose</option>
+              <option value="1">1st year</option>
+              <option value="2">2nd year</option>
+              <option value="3">3rd year</option>
+              <option value="4">4th year</option>
+              <option value="5">5th year</option>
+            </select>
+            <p id="su-year-err" class="field-error caption-2" data-error-for="year" aria-live="polite"></p>
+          </div>
+          <div class="field">
+            <label class="title-4" for="su-branch">Branch</label>
+            <input id="su-branch" class="text-input body-3" name="branch" type="text" required maxlength="40"
+                   placeholder="CSE" aria-describedby="su-branch-err">
+            <p id="su-branch-err" class="field-error caption-2" data-error-for="branch" aria-live="polite"></p>
+          </div>
+        </div>
+
+        <div class="field">
+          <label class="title-4" for="su-hostel">Hostel</label>
+          <input id="su-hostel" class="text-input body-3" name="hostel" type="text" required maxlength="60"
+                 placeholder="Girls Hostel A" aria-describedby="su-hostel-hint su-hostel-err">
+          <p id="su-hostel-hint" class="caption-5 muted">Write it exactly as your hostel office does, so you land with the right people.</p>
+          <p id="su-hostel-err" class="field-error caption-2" data-error-for="hostel" aria-live="polite"></p>
+        </div>
+
+        <div class="field">
+          <label class="title-4" for="su-password">Password</label>
+          <input id="su-password" class="text-input body-3" name="password" type="password" autocomplete="new-password" required minlength="8"
+                 aria-describedby="su-password-hint su-password-err">
+          <p id="su-password-hint" class="caption-5 muted">At least 8 characters.</p>
+          <p id="su-password-err" class="field-error caption-2" data-error-for="password" aria-live="polite"></p>
+        </div>
+
+        <p class="form-error caption-2" role="alert"></p>
+        <div class="auth-actions">
+          <button class="btn btn-primary button-md" type="submit">Create account <span class="ph ph-arrow-right" aria-hidden="true"></span></button>
+          <p class="caption-2 muted">Already signed up? <a class="text-link" href="/login">Log in</a></p>
+        </div>
+      </form>
+    </section>
+  </div>
+</main>
