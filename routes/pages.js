@@ -132,7 +132,7 @@ const PAGES = {
     body: [
       'We store your name, college email, hostel, year, branch and quiz answers. Your answers are only used to calculate match scores for students in the same college and hostel.',
       'Your email is only shown to another student after you both accept a room request. We never sell or share your data with third parties.',
-      'To delete your account and answers, email hello@nivasa.in from your college email.',
+      'You can delete your account at any time from this page while logged in. It removes your account, your quiz answers and every room request you sent or received.',
     ],
   },
   terms: {
