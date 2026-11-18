@@ -129,7 +129,7 @@ To see the demo students as matches, sign up with any `@nivasa-demo.ac.in`
 email and hostel `Girls Hostel A`.
 
 ```bash
-npm test         # compatibility engine tests (Node 22+)
+npm test         # engine and JSON store tests (Node 22+)
 ```
 
 Tests also run automatically on every push and pull request through
@@ -159,6 +159,26 @@ GitHub Actions.
 | GET | `/api/requests` | Incoming and outgoing room requests |
 | POST | `/api/requests` | Send a request `{ to: userId }` |
 | PATCH | `/api/requests/:id` | `{ status: "accepted" \| "declined" \| "cancelled" }` |
+| DELETE | `/api/quiz` | Start over: deletes your saved answers |
+| DELETE | `/api/me` | Delete your account, answers and room requests |
+| GET | `/api/feedback` | Latest feedback, read from `data/feedback.json` |
+| POST | `/api/feedback` | Save feedback `{ message, rating }` to `data/feedback.json` |
+
+### CRUD on MongoDB
+
+| Operation | Endpoint | Mongoose |
+| --- | --- | --- |
+| **Create** | `POST /api/auth/signup`, `POST /api/requests` | `save()`, `create()`, `findOneAndUpdate({ upsert })` |
+| **Read** | `GET /api/me`, `GET /api/matches`, `GET /api/requests` | `findOne()`, `find()`, `populate()` |
+| **Update** | `PUT /api/quiz`, `PATCH /api/requests/:id` | `findOneAndUpdate()`, `save()` |
+| **Delete** | `DELETE /api/quiz`, `DELETE /api/me` | `deleteOne()`, `deleteMany()` |
+
+### Local JSON file storage
+
+Feedback is not kept in MongoDB: `utils/jsonStore.js` reads and writes
+`data/feedback.json` with Node's `fs` module. Writes go to a temporary file
+first and are renamed into place, and they are queued so two requests never
+overwrite each other.
 
 ## Project structure
 
@@ -166,14 +186,16 @@ GitHub Actions.
 server.js              Express app: views, security headers, sessions, routes
 config/db.js           MongoDB connection (embedded fallback in development)
 models/                User, Profile (quiz answers), Match (room requests)
-controllers/           auth, quiz, matches and requests handlers
+controllers/           auth, quiz, matches, requests and feedback handlers
 middleware/            auth guards, error handling
 routes/                api.js (JSON), pages.js (Handlebars pages)
 shared/engine.js       Questions and compatibility engine (server + browser)
 views/                 Handlebars layout, partials, home, login, signup, 404
 public/                CSS, browser JS, favicon and share image
 scripts/seed.js        Demo students
-tests/                 Engine tests (node --test)
+utils/jsonStore.js     Read and write local JSON files with fs
+data/                  Local JSON data (feedback.json, git-ignored)
+tests/                 Engine and JSON store tests (node --test)
 docs/                  Synopsis, progress report, timeline, screenshots
 ```
 
