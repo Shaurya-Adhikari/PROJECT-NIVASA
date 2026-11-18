@@ -3,3 +3,5 @@ node_modules/
 .data/
 public/_backup-*/
 *.log
+data/*.json
+data/*.tmp

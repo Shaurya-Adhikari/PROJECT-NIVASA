@@ -37,4 +37,10 @@ async function saveAnswers(req, res) {
   res.json({ answers: profile.answers.toObject(), complete: Boolean(profile.completedAt) });
 }
 
-module.exports = { questions, saveAnswers };
+// DELETE /api/quiz — start over: removes the student's saved answers
+async function resetAnswers(req, res) {
+  const result = await Profile.deleteOne({ user: req.user._id });
+  res.json({ answers: {}, complete: false, deleted: result.deletedCount });
+}
+
+module.exports = { questions, saveAnswers, resetAnswers };
