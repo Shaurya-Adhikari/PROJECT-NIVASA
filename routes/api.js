@@ -5,6 +5,7 @@ const { asyncHandler } = require('../middleware/errorHandler');
 const auth = require('../controllers/authController');
 const quiz = require('../controllers/quizController');
 const matches = require('../controllers/matchController');
+const feedback = require('../controllers/feedbackController');
 
 const router = express.Router();
 
@@ -22,10 +23,23 @@ router.post('/auth/signup', authLimiter, asyncHandler(auth.signup));
 router.post('/auth/login', authLimiter, asyncHandler(auth.login));
 router.post('/auth/logout', auth.logout);
 router.get('/me', requireApiAuth, asyncHandler(auth.me));
+router.delete('/me', requireApiAuth, asyncHandler(auth.deleteAccount));
 
 // Quiz
 router.get('/quiz', quiz.questions);
 router.put('/quiz', requireApiAuth, asyncHandler(quiz.saveAnswers));
+router.delete('/quiz', requireApiAuth, asyncHandler(quiz.resetAnswers));
+
+// Feedback, stored in a local JSON file (data/feedback.json)
+const feedbackLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  limit: 10,
+  standardHeaders: 'draft-7',
+  legacyHeaders: false,
+  message: { error: 'Too much feedback at once. Try again later.' },
+});
+router.get('/feedback', asyncHandler(feedback.list));
+router.post('/feedback', feedbackLimiter, asyncHandler(feedback.create));
 
 // Matches feed and room requests
 router.get('/matches', requireApiAuth, asyncHandler(matches.list));

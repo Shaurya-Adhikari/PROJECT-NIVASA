@@ -35,6 +35,12 @@
   <script src="/shared/engine.js" defer></script>
   <script src="/js/main.js" defer></script>
   {{/if}}
+  {{#if (eq page "about")}}
+  <script src="/js/pages.js" defer></script>
+  {{/if}}
+  {{#if (eq page "privacy")}}
+  <script src="/js/pages.js" defer></script>
+  {{/if}}
   {{#if (eq page "auth")}}
   <script src="/js/auth.js" defer></script>
   {{/if}}

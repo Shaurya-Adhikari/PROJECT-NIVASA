@@ -1,5 +1,6 @@
 const User = require('../models/User');
 const Profile = require('../models/Profile');
+const Match = require('../models/Match');
 const { sanitize } = require('../shared/engine');
 const { HttpError } = require('../middleware/errorHandler');
 
@@ -75,4 +76,23 @@ async function me(req, res) {
   res.json({ user: req.user.toPublic(), answers: profile ? profile.answers.toObject() : {} });
 }
 
-module.exports = { signup, login, logout, me };
+// DELETE /api/me — delete the account: the user, their quiz profile and
+// every room request they sent or received, then end the session
+async function deleteAccount(req, res, next) {
+  const id = req.user._id;
+  const [requests, profiles, users] = await Promise.all([
+    Match.deleteMany({ $or: [{ from: id }, { to: id }] }),
+    Profile.deleteOne({ user: id }),
+    User.deleteOne({ _id: id }),
+  ]);
+  req.session.destroy((err) => {
+    if (err) return next(err);
+    res.clearCookie('nivasa.sid');
+    res.json({
+      ok: true,
+      deleted: { users: users.deletedCount, profiles: profiles.deletedCount, requests: requests.deletedCount },
+    });
+  });
+}
+
+module.exports = { signup, login, logout, me, deleteAccount };

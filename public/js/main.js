@@ -167,10 +167,12 @@
       '</fieldset>';
   }
 
+  const resetBtn = '<button class="btn-text button-sm" type="button" data-reset-quiz>' +
+    '<span class="ph ph-arrow-counter-clockwise" aria-hidden="true"></span>Start over</button>';
   const doneActions = signedIn
-    ? '<div class="done-actions"><a class="btn btn-primary button-md" href="#matches">See my ranking</a>' +
+    ? '<div class="done-actions"><a class="btn btn-primary button-md" href="#matches">See my ranking</a>' + resetBtn +
       '<p class="form-status caption-2" role="status" aria-live="polite"></p></div>'
-    : '<div class="done-actions"><a class="btn btn-primary button-md" href="/signup">Create account and save these</a>' +
+    : '<div class="done-actions"><a class="btn btn-primary button-md" href="/signup">Create account and save these</a>' + resetBtn +
       '<p class="caption-2 muted">Saved on this device for now. Already signed up? <a class="text-link" href="/login?next=%2F%23matches">Log in</a></p></div>';
 
   form.innerHTML = CARDS.map(cardHTML).join('') +
@@ -273,7 +275,32 @@
     if (step !== DONE) goTo(step + 1, true);
   });
 
+  // Start over: signed in → DELETE /api/quiz removes the saved profile;
+  // signed out → clear the answers kept in localStorage
+  async function resetQuiz(btn) {
+    if (!window.confirm('Clear all your answers and start the quiz again?')) return;
+    btn.disabled = true;
+    if (signedIn) {
+      const res = await api('/api/quiz', { method: 'DELETE' });
+      btn.disabled = false;
+      if (!res.ok) { setSaveStatus(res.data.error || 'Could not reset. Try again.', true); return; }
+    } else {
+      try { localStorage.removeItem(ANSWERS_KEY); } catch (e) {}
+    }
+    clearTimeout(saveTimer);
+    pending = {};
+    answers = {};
+    syncChecked();
+    goTo(0, true);
+    renderFeed();
+  }
+
   document.addEventListener('click', (e) => {
+    const reset = e.target.closest('[data-reset-quiz]');
+    if (reset) {
+      resetQuiz(reset);
+      return;
+    }
     const nav = e.target.closest('[data-quiz]');
     if (nav) {
       goTo(step + (nav.dataset.quiz === 'back' ? -1 : 1), true);

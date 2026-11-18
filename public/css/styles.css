@@ -1451,8 +1451,29 @@ select.text-input { appearance: auto; cursor: pointer; }
 }
 .back-link:hover { color: var(--text); }
 
+/* Extra blocks on info pages: feedback (About), delete account (Privacy) */
+.page-extra {
+  grid-column: 2;
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-200);
+  padding-top: var(--sp-300);
+  border-top: 2px solid var(--text);
+}
+.page-extra p { max-width: 640px; }
+.feedback-form { display: flex; flex-direction: column; gap: var(--sp-200); max-width: 560px; }
+.feedback-form .text-input { padding: var(--sp-100) var(--sp-200); background: var(--surface); }
+.feedback-form textarea.text-input { resize: vertical; min-height: 88px; font: inherit; }
+.fb-row { max-width: 240px; }
+.feedback-list { border-top: 1px solid var(--border); }
+.feedback-item { padding: var(--sp-200) 0; border-bottom: 1px solid var(--border); display: flex; flex-direction: column; gap: var(--sp-50); }
+.danger-zone .title-1 { color: var(--danger); }
+.btn-danger { color: var(--danger); border-color: var(--danger); }
+.btn-danger:hover { background: var(--danger); color: var(--on-primary); }
+
 @media (max-width: 899px) {
   .page-grid { grid-template-columns: 1fr; gap: var(--sp-400); }
+  .page-extra { grid-column: auto; }
 }
 
 /* ---------- 404 and error pages ---------- */

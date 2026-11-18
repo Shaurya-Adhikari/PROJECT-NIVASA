@@ -9,5 +9,49 @@
       <li><span class="caption-3 muted page-num">{{inc @index}}</span><p class="body-3">{{this}}</p></li>
       {{/each}}
     </ol>
+
+    {{#if (eq page "privacy")}}
+    {{#if user}}
+    <section class="page-extra danger-zone" aria-labelledby="delete-title">
+      <h2 id="delete-title" class="title-1">Delete my account</h2>
+      <p class="body-3 muted">This permanently removes your account, your quiz answers and every room request you sent or received. It can't be undone.</p>
+      <div class="hero-actions">
+        <button class="btn btn-secondary button-md btn-danger" type="button" data-delete-account>Delete my account</button>
+        <p class="form-error caption-2" role="alert" data-delete-error></p>
+      </div>
+    </section>
+    {{/if}}
+    {{/if}}
+
+    {{#if (eq page "about")}}
+    <section class="page-extra feedback" aria-labelledby="feedback-title">
+      <h2 id="feedback-title" class="title-1">Feedback</h2>
+      <p class="body-3 muted">Tell us what to improve. Feedback is saved to a JSON file on the server through <code>POST /api/feedback</code> and read back with <code>GET /api/feedback</code>.</p>
+      <form class="feedback-form" data-feedback-form novalidate>
+        <div class="field">
+          <label class="caption-1" for="fb-message">Your feedback</label>
+          <textarea id="fb-message" class="text-input body-3" name="message" rows="3" maxlength="500" required aria-describedby="fb-message-error"></textarea>
+          <p id="fb-message-error" class="field-error caption-2" data-error-for="message"></p>
+        </div>
+        <div class="field fb-row">
+          <label class="caption-1" for="fb-rating">Rating</label>
+          <select id="fb-rating" class="text-input body-3" name="rating">
+            <option value="">No rating</option>
+            <option value="5">5 · Love it</option>
+            <option value="4">4 · Good</option>
+            <option value="3">3 · Okay</option>
+            <option value="2">2 · Needs work</option>
+            <option value="1">1 · Poor</option>
+          </select>
+        </div>
+        <div class="hero-actions">
+          <button class="btn btn-primary button-md" type="submit">Send feedback</button>
+          <p class="form-status caption-2" role="status" aria-live="polite" data-feedback-status></p>
+        </div>
+      </form>
+      <p class="caption-2 muted fb-summary" data-feedback-summary></p>
+      <ul class="feedback-list" role="list" data-feedback-list></ul>
+    </section>
+    {{/if}}
   </article>
 </main>
